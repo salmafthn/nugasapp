@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "125380109244",
+    "project_id": "papb-a129e",
+    "storage_bucket": "papb-a129e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:125380109244:android:5c2d7669ce45d3f86841b9",
+        "android_client_info": {
+          "package_name": "com.example.modul2"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB8_LBK9jeDq50WNynawIVd5QYsdHlfYak"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
