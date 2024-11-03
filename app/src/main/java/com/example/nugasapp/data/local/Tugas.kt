@@ -18,4 +18,6 @@ class Tugas (
     var detailTugas: String,
     @ColumnInfo(name = "selesai")
     var selesai: Boolean,
+    @ColumnInfo(name = "image_uri")
+    var imageUri: String? = null  // Tambahkan kolom imageUri
 ) : Parcelable

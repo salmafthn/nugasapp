@@ -37,12 +37,13 @@ class MainViewModel(private val tugasRepository: TugasRepository) : ViewModel() 
         }
     }
 
-    fun addTugas(matkul: String, detailTugas: String) {
-        val newTugas = Tugas(matkul = matkul, detailTugas = detailTugas, selesai = false)
+    fun addTugas(matkul: String, detailTugas: String, imageUri: String?) {
+        val newTugas = Tugas(matkul = matkul, detailTugas = detailTugas, selesai = false, imageUri = imageUri)
         viewModelScope.launch {
             tugasRepository.insert(newTugas)
         }
     }
+
 
     fun getGithubProfile(user: String) {
         viewModelScope.launch {

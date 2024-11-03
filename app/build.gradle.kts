@@ -87,12 +87,18 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
     implementation(platform("com.google.firebase:firebase-bom:32.3.1"))
-    implementation (libs.androidx.navigation.compose)
-    implementation ("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation(libs.androidx.navigation.compose)
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation("io.coil-kt:coil-compose:2.0.0")
 
     implementation(libs.androidx.room.runtime)
     ksp(libs.androidx.room.compiler)
+
+    implementation ("androidx.camera:camera-core:1.0.2")
+    implementation ("androidx.camera:camera-camera2:1.0.2")
+    implementation ("androidx.camera:camera-lifecycle:1.0.2")
+    implementation ("androidx.camera:camera-view:1.0.0-alpha26")
+
 
 }

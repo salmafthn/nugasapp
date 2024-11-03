@@ -16,6 +16,6 @@ interface TugasDAO {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertTugas(tugas: Tugas)
 
-    @Update // This annotation will generate the update method
+    @Update
     fun updateTugas(tugas: Tugas)
 }
