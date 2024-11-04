@@ -38,9 +38,9 @@ fun ProfileScreen(
     modifier: Modifier = Modifier,
     navController: NavHostController,
     auth: FirebaseAuth,
-    tugasRepository: TugasRepository // Accept TugasRepository as a parameter
+    tugasRepository: TugasRepository
 ) {
-    // Create the ViewModel using the factory
+
     val viewModel: MainViewModel = viewModel(factory = MainViewModelFactory(tugasRepository))
     val user by viewModel.user.collectAsState()
 

@@ -67,7 +67,7 @@ fun MainActivityContent(
     modifier: Modifier = Modifier,
     application: Application = LocalContext.current.applicationContext as Application
 ) {
-    // Create an instance of TugasRepository
+
     val tugasRepository = TugasRepository(application)
 
     val showBottomBar = remember { mutableStateOf(true) }
@@ -91,13 +91,13 @@ fun MainActivityContent(
                 MatkulScreen(auth = auth, navController = navController)
             }
             composable(Screen.Profil.route) {
-                ProfileScreen(auth = auth, navController = navController, tugasRepository = tugasRepository) // Pass the repository here
+                ProfileScreen(auth = auth, navController = navController, tugasRepository = tugasRepository)
             }
             composable("login") {
                 LoginScreen(auth = auth, navController = navController)
             }
             composable(Screen.Tugas.route) {
-                TugasScreen(application = application) // Pass the application context here
+                TugasScreen(application = application)
             }
         }
     }

@@ -40,7 +40,6 @@ fun LoginScreen(auth: FirebaseAuth, navController: NavController, isTestMode: Bo
     var password by remember { mutableStateOf("") }
     val context = LocalContext.current
 
-    // Jika mode test diaktifkan, bypass autentikasi
     if (isTestMode) {
         LaunchedEffect(Unit) {
             navController.navigate(Screen.Matkul.route) {
@@ -119,7 +118,7 @@ fun LoginScreen(auth: FirebaseAuth, navController: NavController, isTestMode: Bo
 
             Button(
                 onClick = {
-                    if (isButtonEnabled || isTestMode) { // tambahkan kondisi isTestMode
+                    if (isButtonEnabled || isTestMode) {
                         if (isTestMode) {
                             navController.navigate(Screen.Matkul.route) {
                                 popUpTo(navController.graph.findStartDestination().id) {
@@ -148,7 +147,7 @@ fun LoginScreen(auth: FirebaseAuth, navController: NavController, isTestMode: Bo
                         }
                     }
                 },
-                enabled = isButtonEnabled || isTestMode, // tambahkan kondisi isTestMode
+                enabled = isButtonEnabled || isTestMode,
                 colors = if (isButtonEnabled || isTestMode) {
                     ButtonDefaults.buttonColors()
                 } else {

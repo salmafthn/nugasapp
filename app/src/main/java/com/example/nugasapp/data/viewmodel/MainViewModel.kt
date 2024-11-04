@@ -16,7 +16,7 @@ import kotlinx.coroutines.flow.StateFlow
 class MainViewModel(private val tugasRepository: TugasRepository) : ViewModel() {
     private val profileRepository = ProfileRepository()
 
-    private val _user = MutableStateFlow<Github?>(null) // Use StateFlow
+    private val _user = MutableStateFlow<Github?>(null)
     val user: StateFlow<Github?> get() = _user
     private val _error = MutableLiveData<String?>()
     val error: LiveData<String?> get() = _error

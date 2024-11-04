@@ -43,11 +43,9 @@ fun TugasScreen(application: Application) {
     var snackbarMessage by remember { mutableStateOf("") }
     val context = LocalContext.current
 
-    // Camera and Image Preview Variables
     var imageUri by remember { mutableStateOf<Uri?>(null) }
     var bitmap by remember { mutableStateOf<Bitmap?>(null) }
 
-    // Camera launcher
     val cameraLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.TakePicture()
     ) { success ->
@@ -60,12 +58,11 @@ fun TugasScreen(application: Application) {
         }
     }
 
-    // Permission launcher for requesting camera permission
     val cameraPermissionLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.RequestPermission()
     ) { isGranted ->
         if (isGranted) {
-            val newImageUri = createImageFile(context) // Create a new file and store its URI in a local variable
+            val newImageUri = createImageFile(context)
             imageUri = newImageUri
             newImageUri?.let { uri ->
                 cameraLauncher.launch(uri)
@@ -85,7 +82,6 @@ fun TugasScreen(application: Application) {
             .fillMaxSize()
             .padding(16.dp)
     ) {
-        // Bagian untuk form tambah tugas dan tombol
         Column(modifier = Modifier.fillMaxWidth()) {
             Text(text = "Tambah tugas", fontSize = 24.sp)
             Spacer(modifier = Modifier.height(16.dp))
@@ -108,7 +104,7 @@ fun TugasScreen(application: Application) {
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            // Display image preview if an image is captured
+
             bitmap?.let {
                 Image(
                     bitmap = it.asImageBitmap(),
@@ -125,9 +121,9 @@ fun TugasScreen(application: Application) {
             ) {
                 Button(
                     onClick = {
-                        // Check if permission is granted
+
                         if (ContextCompat.checkSelfPermission(context, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
-                            val newImageUri = createImageFile(context) // Create a new file and store its URI in a local variable
+                            val newImageUri = createImageFile(context)
                             imageUri = newImageUri
                             newImageUri?.let { uri ->
                                 cameraLauncher.launch(uri)
@@ -169,12 +165,11 @@ fun TugasScreen(application: Application) {
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Bagian untuk daftar tugas menggunakan LazyColumn dengan reversed
         Text(text = "Daftar Tugas", fontSize = 24.sp)
         Spacer(modifier = Modifier.height(8.dp))
 
         LazyColumn(modifier = Modifier.weight(1f)) {
-            items(tugasList.reversed()) { tugas -> // reversed untuk menampilkan item terbaru di atas
+            items(tugasList.reversed()) { tugas ->
                 Card(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -183,7 +178,7 @@ fun TugasScreen(application: Application) {
                     Column(modifier = Modifier.padding(16.dp)) {
                         Text(text = "Matkul: ${tugas.matkul}", fontSize = 18.sp)
                         Text(text = "Detail: ${tugas.detailTugas}", fontSize = 16.sp)
-                        // Display the image from Uri
+
                         tugas.imageUri?.let { uri ->
                             val tugasBitmap = loadBitmapFromUri(context, Uri.parse(uri))
                             tugasBitmap?.let { bmp ->
@@ -215,7 +210,6 @@ fun TugasScreen(application: Application) {
     }
 }
 
-// Function to create a new file for each image capture to prevent overwriting
 private fun createImageFile(context: Context): Uri? {
     return try {
         val file = File(context.filesDir, "tugas_image_${System.currentTimeMillis()}.jpg")
