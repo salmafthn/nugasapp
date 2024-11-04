@@ -19,7 +19,7 @@ abstract class TugasDB : RoomDatabase() {
                 synchronized(TugasDB::class.java) {
                     INSTANCE = Room.databaseBuilder(context.applicationContext,
                         TugasDB::class.java, "Tugas_database")
-                        .fallbackToDestructiveMigration()  // Menghancurkan database lama
+                        .fallbackToDestructiveMigration()
                         .build()
                 }
             }

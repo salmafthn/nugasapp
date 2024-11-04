@@ -35,14 +35,14 @@ import com.example.nugasapp.navigation.Screen
 import com.google.firebase.auth.FirebaseAuth
 
 @Composable
-fun LoginScreen(auth: FirebaseAuth, navController: NavController) {
+fun LoginScreen(auth: FirebaseAuth, navController: NavController, isTestMode: Boolean = false) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     val context = LocalContext.current
 
-    LaunchedEffect(Unit) {
-        val currentUser = auth.currentUser
-        if (currentUser != null) {
+    // Jika mode test diaktifkan, bypass autentikasi
+    if (isTestMode) {
+        LaunchedEffect(Unit) {
             navController.navigate(Screen.Matkul.route) {
                 popUpTo(navController.graph.findStartDestination().id) {
                     inclusive = true
@@ -50,7 +50,20 @@ fun LoginScreen(auth: FirebaseAuth, navController: NavController) {
                 launchSingleTop = true
             }
         }
+    } else {
+        LaunchedEffect(Unit) {
+            val currentUser = auth.currentUser
+            if (currentUser != null) {
+                navController.navigate(Screen.Matkul.route) {
+                    popUpTo(navController.graph.findStartDestination().id) {
+                        inclusive = true
+                    }
+                    launchSingleTop = true
+                }
+            }
+        }
     }
+
     val isButtonEnabled = email.isNotEmpty() && password.isNotEmpty()
 
     Scaffold { paddingValues ->
@@ -106,28 +119,37 @@ fun LoginScreen(auth: FirebaseAuth, navController: NavController) {
 
             Button(
                 onClick = {
-                    if (isButtonEnabled) {
-                        auth.signInWithEmailAndPassword(email, password)
-                            .addOnCompleteListener { task ->
-                                if (task.isSuccessful) {
-                                    navController.navigate(Screen.Matkul.route) {
-                                        popUpTo(navController.graph.findStartDestination().id) {
-                                            inclusive = true
-                                        }
-                                        launchSingleTop = true
-                                    }
-                                } else {
-                                    Toast.makeText(
-                                        context,
-                                        "Login failed: ${task.exception?.message}",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
+                    if (isButtonEnabled || isTestMode) { // tambahkan kondisi isTestMode
+                        if (isTestMode) {
+                            navController.navigate(Screen.Matkul.route) {
+                                popUpTo(navController.graph.findStartDestination().id) {
+                                    inclusive = true
                                 }
+                                launchSingleTop = true
                             }
+                        } else {
+                            auth.signInWithEmailAndPassword(email, password)
+                                .addOnCompleteListener { task ->
+                                    if (task.isSuccessful) {
+                                        navController.navigate(Screen.Matkul.route) {
+                                            popUpTo(navController.graph.findStartDestination().id) {
+                                                inclusive = true
+                                            }
+                                            launchSingleTop = true
+                                        }
+                                    } else {
+                                        Toast.makeText(
+                                            context,
+                                            "Login failed: ${task.exception?.message}",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                    }
+                                }
+                        }
                     }
                 },
-                enabled = isButtonEnabled,
-                colors = if (isButtonEnabled) {
+                enabled = isButtonEnabled || isTestMode, // tambahkan kondisi isTestMode
+                colors = if (isButtonEnabled || isTestMode) {
                     ButtonDefaults.buttonColors()
                 } else {
                     ButtonDefaults.buttonColors(containerColor = Color.Gray)
